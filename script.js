@@ -4,6 +4,18 @@ function getQueryParam(param) {
   return urlParams.get(param) || "";
 }
 
+// Hide form for guests (if info is present in URL)
+function hideSetupFormIfGuest() {
+  var ssid = getQueryParam('ssid');
+  if (ssid) {
+    document.getElementById('instructions').style.display = "none";
+    document.getElementById('ssid').style.display = "none";
+    document.getElementById('password').style.display = "none";
+    document.getElementById('security').style.display = "none";
+    document.querySelector('button[onclick="generate()"]').style.display = "none";
+  }
+}
+
 // Auto-populate fields if URL contains Wi-Fi info
 window.onload = function() {
   var ssid = getQueryParam('ssid');
@@ -12,7 +24,7 @@ window.onload = function() {
   if (ssid) document.getElementById('ssid').value = ssid;
   if (password) document.getElementById('password').value = password;
   document.getElementById('security').value = security;
-  // If Wi-Fi info present, auto-generate QR/profile instantly
+  hideSetupFormIfGuest();
   if (ssid) generate();
 };
 
@@ -42,6 +54,14 @@ function generate() {
   });
 }
 window.generate = generate;
+
+// Helper function to generate a random UUID (for iPhone profile)
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
 
 // iPhone Wi-Fi profile download button
 document.getElementById('downloadProfile').onclick = function() {
@@ -87,7 +107,7 @@ document.getElementById('downloadProfile').onclick = function() {
     <key>PayloadRemovalDisallowed</key>
     <false/>
     <key>PayloadUUID</key>
-    <string>12345678-1234-5678-1234-${Date.now()}</string>
+    <string>${generateUUID()}</string>
   </dict>
 </plist>`;
   var blob = new Blob([profile], {type: 'application/x-apple-aspen-config'});
@@ -96,4 +116,3 @@ document.getElementById('downloadProfile').onclick = function() {
   link.download = 'wifi.mobileconfig';
   link.click();
 };
-
