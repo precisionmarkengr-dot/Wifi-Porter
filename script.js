@@ -16,7 +16,7 @@ function hideSetupFormIfGuest() {
   }
 }
 
-// Auto-populate fields if URL contains Wi-Fi info
+// Auto-populate fields from URL, switch to guest mode if needed
 window.onload = function() {
   var ssid = getQueryParam('ssid');
   var password = getQueryParam('password');
@@ -28,7 +28,7 @@ window.onload = function() {
   if (ssid) generate();
 };
 
-// Generate setup URL, QR code
+// Generate setup URL, QR code, update results
 function generate() {
   var ssid = document.getElementById('ssid').value;
   var password = document.getElementById('password').value;
@@ -63,7 +63,7 @@ function generateUUID() {
   });
 }
 
-// iPhone Wi-Fi profile download button
+// Download Wi-Fi profile for iPhone (mobileconfig)
 document.getElementById('downloadProfile').onclick = function() {
   var ssid = document.getElementById('ssid').value;
   var password = document.getElementById('password').value;
@@ -116,3 +116,4 @@ document.getElementById('downloadProfile').onclick = function() {
   link.download = 'wifi.mobileconfig';
   link.click();
 };
+
