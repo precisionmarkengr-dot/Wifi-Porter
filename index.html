@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WiFi Porter Setup</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>WiFi Porter Setup</h1>
+
+    <label>WiFi Name (SSID)</label>
+    <input id="ssid" type="text" placeholder="Enter network name" />
+
+    <label>Password</label>
+    <input id="password" type="text" placeholder="Enter password" />
+
+    <label>Security</label>
+    <select id="security">
+      <option value="WPA">WPA/WPA2</option>
+      <option value="WEP">WEP</option>
+      <option value="nopass">None</option>
+    </select>
+
+    <button onclick="generate()">Generate Link + QR</button>
+
+    <h2>Result</h2>
+    <textarea id="wifiString" readonly></textarea>
+
+    <h2>QR Code</h2>
+    <div id="qrcode"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
