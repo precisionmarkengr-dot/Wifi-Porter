@@ -16,7 +16,7 @@ window.onload = function() {
   if (ssid) generate();
 };
 
-// Generate setup URL, QR code, and enable iPhone profile download
+// Generate setup URL, QR code
 function generate() {
   var ssid = document.getElementById('ssid').value;
   var password = document.getElementById('password').value;
@@ -41,8 +41,6 @@ function generate() {
     }
   });
 }
-
-// Make "Generate" available for the button
 window.generate = generate;
 
 // iPhone Wi-Fi profile download button
@@ -96,4 +94,6 @@ document.getElementById('downloadProfile').onclick = function() {
   var link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
   link.download = 'wifi.mobileconfig';
-  link
+  link.click();
+};
+
