@@ -1,4 +1,3 @@
-// Helper to read parameters from the URL
 function generateUUID() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
@@ -7,9 +6,9 @@ function generateUUID() {
 }
 
 document.getElementById('downloadProfile').onclick = function() {
-  var ssid = document.getElementById('ssid').value;
-  var password = document.getElementById('password').value;
-  var security = document.getElementById('security').value;
+  var ssid = document.getElementById('ssid').value.trim();
+  var password = document.getElementById('password').value.trim();
+  var security = document.getElementById('security').value.trim();
   var uuid = generateUUID();
   var profile =
 `<?xml version="1.0" encoding="UTF-8"?>
@@ -53,9 +52,12 @@ document.getElementById('downloadProfile').onclick = function() {
     <string>${uuid}</string>
   </dict>
 </plist>`;
+  
   var blob = new Blob([profile], {type: 'application/x-apple-aspen-config'});
   var link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
   link.download = 'wifi.mobileconfig';
+  document.body.appendChild(link); // ensure anchor is in DOM for click
   link.click();
+  document.body.removeChild(link); // clean up anchor element
 };
