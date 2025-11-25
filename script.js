@@ -23,11 +23,21 @@ window.onload = function() {
   var ssid = getQueryParam('ssid');
   var password = getQueryParam('password');
   var security = getQueryParam('security') || "WPA";
+
   if (ssid) document.getElementById('ssid').value = ssid;
   if (password) document.getElementById('password').value = password;
   document.getElementById('security').value = security;
+
   hideSetupFormIfGuest();
+
   if (ssid) generate();
+
+  // Show Android-only buttons if device is Android
+  const isAndroid = /android/i.test(navigator.userAgent);
+  if (isAndroid) {
+    const section = document.getElementById("androidSection");
+    if (section) section.style.display = "block";
+  }
 };
 
 // Generate setup URL and QR code
@@ -47,8 +57,9 @@ function generate() {
   } else {
     qrString = `WIFI:T:${security};S:${ssid};P:${password};;`;
   }
+
   document.getElementById('qrcode').innerHTML = "";
-  QRCode.toCanvas(qrString, { width: 180 }, function (error, canvas) {
+  QRCode.toCanvas(qrString, { width: 300, margin: 2 }, function (error, canvas) {
     if (!error) {
       document.getElementById('qrcode').appendChild(canvas);
     }
@@ -58,7 +69,6 @@ window.generate = generate;
 
 // RFC-compliant UUID for Apple mobileconfig PayloadUUID
 function generateUUID() {
-  // More reliable UUID v4 generation
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0;
     var v = c === 'x' ? r : (r & 0x3 | 0x8);
@@ -73,6 +83,7 @@ document.getElementById('downloadProfile').onclick = function() {
   var security = document.getElementById('security').value;
   var uuid = generateUUID();
   var wifiUuid = generateUUID();
+
   var profile =
 `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -117,6 +128,7 @@ document.getElementById('downloadProfile').onclick = function() {
     <string>${uuid}</string>
   </dict>
 </plist>`;
+
   var blob = new Blob([profile], {type: 'application/x-apple-aspen-config'});
   var link = document.createElement('a');
   link.href = window.URL.createObjectURL(blob);
@@ -125,3 +137,16 @@ document.getElementById('downloadProfile').onclick = function() {
   link.click();
   document.body.removeChild(link);
 };
+
+// ANDROID: Copy password
+function copyWifi() {
+  var password = document.getElementById('password').value.trim();
+  navigator.clipboard.writeText(password).then(() => {
+    alert("Password copied!");
+  });
+}
+
+// ANDROID: Open WiFi settings
+function openWifiSettings() {
+  window.location.href = "intent:#Intent;action=android.settings.WIFI_SETTINGS;end";
+}
