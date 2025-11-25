@@ -47,3 +47,47 @@ function printWifiCard() {
       }
       #qrcode canvas {
         display: block;
+        margin: 0 auto;
+      }
+      .small-text {
+        font-size: 10px;
+        margin-top: 4px;
+        line-height: 1.2;
+      }
+      .scissors {
+        position: absolute;
+        bottom: -6px;
+        right: -6px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="card">
+      <div id="qrcode"></div>
+
+      <div class="small-text">
+        <b>SSID:</b> ${ssid}<br>
+        <b>Password:</b> ${password || "(none)"}<br>
+        <b>Security:</b> ${security}
+      </div>
+
+      <div class="scissors">✂️</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+      QRCode.toCanvas("${qrData}", { width: 80 }, function(err, canvas) {
+        if (!err) {
+          document.getElementById("qrcode").appendChild(canvas);
+          window.print();
+        }
+      });
+    </script>
+
+  </body>
+  </html>
+  `);
+}
+
