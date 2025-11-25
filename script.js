@@ -72,6 +72,7 @@ document.getElementById('downloadProfile').onclick = function() {
   var password = document.getElementById('password').value;
   var security = document.getElementById('security').value;
   var uuid = generateUUID();
+  var wifiUuid = generateUUID();
   var profile =
 `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -91,7 +92,9 @@ document.getElementById('downloadProfile').onclick = function() {
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadIdentifier</key>
-        <string>wifi.porter.setup</string>
+        <string>wifi.porter.setup.wifi</string>
+        <key>PayloadUUID</key>
+        <string>${wifiUuid}</string>
         <key>PayloadDisplayName</key>
         <string>Wi-Fi Porter Setup</string>
         <key>AutoJoin</key>
