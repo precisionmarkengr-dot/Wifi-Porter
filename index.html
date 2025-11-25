@@ -50,15 +50,20 @@
     <label>Your NFC Tag Setup Link:</label>
     <textarea id="wifiString" readonly></textarea>
 
+    <!-- NEW BUTTON: COPY URL -->
+    <button onclick="copySetupUrl()" style="margin-top:10px;">Copy URL</button>
+
     <h2>QR Code</h2>
     <div id="qrcode" class="qr-wrapper"></div>
+
+    <!-- NEW BUTTON: PRINT WIFI CARD -->
+    <button onclick="printWifiCard()" style="margin-top:10px;">Print WiFi Card</button>
 
     <!-- ANDROID SECTION -->
     <div id="androidSection" class="android-only" style="display:none;">
       <h2>Android Options</h2>
 
       <button onclick="copyWifi()">Copy Password</button>
-
       <button onclick="openWifiSettings()">Open WiFi Settings</button>
 
       <p class="note">
@@ -83,5 +88,3 @@
 
 </body>
 </html>
-
-
