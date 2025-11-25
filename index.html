@@ -9,7 +9,13 @@
 <body>
   <div class="container">
     <h1>WiFi Porter Setup</h1>
-
+    <p id="instructions">
+      <b>Porter Setup:</b><br>
+      1. Enter your Wi-Fi network info.<br>
+      2. Click "Generate Link + QR."<br>
+      3. Copy the link and write it to your NFC tag using the NFC Tools app.<br>
+      4. Done! Guests can tap Porter for instant Wi-Fi.
+    </p>
     <label>WiFi Name (SSID)</label>
     <input id="ssid" type="text" placeholder="Enter network name" />
 
@@ -26,7 +32,7 @@
     <button onclick="generate()">Generate Link + QR</button>
     <button id="downloadProfile" type="button" style="margin-top:10px;">Download Wi-Fi Profile for iPhone</button>
 
-    <h2>Result</h2>
+    <label style="margin-top:10px;">Your custom setup link for NFC tag:</label>
     <textarea id="wifiString" readonly></textarea>
 
     <h2>QR Code</h2>
