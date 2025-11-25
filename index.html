@@ -3,23 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WiFi Porter Setup</title>
+  <title>WiFi Porter Setup – Precision Mark Engraving</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="container">
 
-    <h1>WiFi Porter Setup</h1>
+    <!-- BRAND HEADER -->
+    <div class="brand-header">
+      <img src="logo.png" alt="Precision Mark Engraving Logo" class="brand-logo">
+      <h1 class="brand-title">Precision Mark Engraving</h1>
+    </div>
+
+    <h2 class="page-title">WiFi Porter Setup</h2>
 
     <p id="instructions">
-      <b>Porter Setup:</b><br>
-      1. Enter your Wi-Fi network info.<br>
-      2. Click "Generate Link + QR."<br>
-      3. Copy the link and write it to your NFC tag using the NFC Tools app.<br>
-      4. Done! Guests can tap Porter for instant Wi-Fi.
+      <b>Porter Setup Steps:</b><br>
+      1. Enter your Wi-Fi information.<br>
+      2. Tap "Generate Link + QR".<br>
+      3. Copy the link and write it to your NFC tag using NFC Tools.<br>
+      4. Done — guests can tap your Porter for instant Wi-Fi.
     </p>
 
-    <!-- WiFi Form -->
+    <!-- WIFI FORM -->
     <label>WiFi Name (SSID)</label>
     <input id="ssid" type="text" placeholder="Enter network name" />
 
@@ -35,32 +42,28 @@
 
     <button onclick="generate()">Generate Link + QR</button>
 
-    <!-- iPhone profile download -->
-    <button id="downloadProfile" type="button" style="margin-top:10px;">
-      Download Wi-Fi Profile for iPhone (mobileconfig)
+    <!-- iPhone MOBILECONFIG -->
+    <button id="downloadProfile" type="button" class="iphone-btn">
+      Download Wi-Fi Profile for iPhone
     </button>
 
-    <label style="margin-top:10px;">Your custom setup link for NFC tag:</label>
+    <label>Your NFC Tag Setup Link:</label>
     <textarea id="wifiString" readonly></textarea>
 
     <h2>QR Code</h2>
-    <div id="qrcode" style="text-align:center;"></div>
+    <div id="qrcode" class="qr-wrapper"></div>
 
     <!-- ANDROID SECTION -->
-    <div id="androidSection" class="android-only" style="margin-top:25px; display:none;">
-
+    <div id="androidSection" class="android-only" style="display:none;">
       <h2>Android Options</h2>
 
-      <button onclick="copyWifi()" style="margin-top:10px;">Copy Password</button>
+      <button onclick="copyWifi()">Copy Password</button>
 
-      <button onclick="openWifiSettings()" style="margin-top:10px;">
-        Open WiFi Settings
-      </button>
+      <button onclick="openWifiSettings()">Open WiFi Settings</button>
 
       <p class="note">
-        Android can scan the QR code above directly from this screen.
+        Android phones can scan the QR above directly from this screen.
       </p>
-
     </div>
 
   </div>
@@ -68,16 +71,17 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="script.js"></script>
 
-  <!-- Detect Android -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const isAndroid = /android/i.test(navigator.userAgent);
       if (isAndroid) {
-        document.getElementById("androidSection").style.display = "block";
+        const section = document.getElementById("androidSection");
+        if (section) section.style.display = "block";
       }
     });
   </script>
 
 </body>
 </html>
+
 
