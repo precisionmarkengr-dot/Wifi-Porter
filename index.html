@@ -8,7 +8,9 @@
 </head>
 <body>
   <div class="container">
+
     <h1>WiFi Porter Setup</h1>
+
     <p id="instructions">
       <b>Porter Setup:</b><br>
       1. Enter your Wi-Fi network info.<br>
@@ -16,6 +18,8 @@
       3. Copy the link and write it to your NFC tag using the NFC Tools app.<br>
       4. Done! Guests can tap Porter for instant Wi-Fi.
     </p>
+
+    <!-- WiFi Form -->
     <label>WiFi Name (SSID)</label>
     <input id="ssid" type="text" placeholder="Enter network name" />
 
@@ -30,16 +34,50 @@
     </select>
 
     <button onclick="generate()">Generate Link + QR</button>
-    <button id="downloadProfile" type="button" style="margin-top:10px;">Download Wi-Fi Profile for iPhone</button>
+
+    <!-- iPhone profile download -->
+    <button id="downloadProfile" type="button" style="margin-top:10px;">
+      Download Wi-Fi Profile for iPhone (mobileconfig)
+    </button>
 
     <label style="margin-top:10px;">Your custom setup link for NFC tag:</label>
     <textarea id="wifiString" readonly></textarea>
 
     <h2>QR Code</h2>
-    <div id="qrcode"></div>
+    <div id="qrcode" style="text-align:center;"></div>
+
+    <!-- ANDROID SECTION -->
+    <div id="androidSection" class="android-only" style="margin-top:25px; display:none;">
+
+      <h2>Android Options</h2>
+
+      <button onclick="copyWifi()" style="margin-top:10px;">Copy Password</button>
+
+      <button onclick="openWifiSettings()" style="margin-top:10px;">
+        Open WiFi Settings
+      </button>
+
+      <p class="note">
+        Android can scan the QR code above directly from this screen.
+      </p>
+
+    </div>
+
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="script.js"></script>
+
+  <!-- Detect Android -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const isAndroid = /android/i.test(navigator.userAgent);
+      if (isAndroid) {
+        document.getElementById("androidSection").style.display = "block";
+      }
+    });
+  </script>
+
 </body>
 </html>
+
