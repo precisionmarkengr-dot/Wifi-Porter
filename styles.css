@@ -1,46 +1,49 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f3f3f3;
+  background: #f4f4f4;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  max-width: 450px;
+  max-width: 430px;
   margin: auto;
   background: white;
   padding: 20px;
   margin-top: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  border-radius: 10px;
 }
 
 .brand-header {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 10px;
 }
 
 .brand-logo {
-  width: 80px;
-  height: 80px;
+  width: 55px;
+  height: 55px;
 }
 
 .brand-title {
-  margin: 5px 0 0 0;
+  font-size: 1.4rem;
+  margin: 0;
 }
 
-h2 {
-  margin-top: 20px;
+label {
+  margin-top: 10px;
+  display: block;
+  font-weight: bold;
 }
 
 input, select, textarea {
   width: 100%;
   padding: 10px;
-  margin-top: 5px;
-  margin-bottom: 15px;
+  margin-top: 4px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
   font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
 }
 
 textarea {
@@ -50,21 +53,23 @@ textarea {
 button {
   width: 100%;
   padding: 12px;
-  background: #007aff;
-  border: none;
+  margin-top: 12px;
+  background: #1a73e8;
   color: white;
-  margin-top: 10px;
+  border: none;
   border-radius: 6px;
   font-size: 16px;
 }
 
-button.small-btn {
-  width: auto;
-  padding: 8px 14px;
-  margin-top: 8px;
-  display: inline-block;
+button.secondary {
+  background: #444;
 }
 
+button:hover {
+  opacity: 0.9;
+}
+
+/* Password Eye */
 .password-wrapper {
   position: relative;
 }
@@ -72,45 +77,63 @@ button.small-btn {
 .eye-icon {
   position: absolute;
   right: 12px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 11px;
   cursor: pointer;
-  user-select: none;
-  font-size: 18px;
 }
 
-.error {
-  border-color: red !important;
+/* Error borders */
+input.error {
+  border: 2px solid #d40000;
 }
 
-.support {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 14px;
-}
-
-.support a {
-  font-weight: bold;
-  text-decoration: none;
-  color: #007aff;
-}
-
+/* QR Modal */
 .modal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.85);
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.2s ease;
 }
 
 .modal-content {
   background: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 12px;
+  text-align: center;
+  animation: popIn 0.25s ease;
 }
 
-.modal-content canvas {
-  width: 300px;
-  height: 300px;
+.close-btn {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;} to {opacity: 1;}
+}
+
+@keyframes popIn {
+  from {transform: scale(0.8); opacity: 0;} 
+  to {transform: scale(1); opacity: 1;}
+}
+
+/* Footer */
+footer {
+  margin-top: 20px;
+  text-align: center;
+  padding: 15px;
+  background: #000;
+  color: white;
+}
+
+footer a {
+  color: #4da3ff;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
 }
