@@ -101,18 +101,30 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// QR FULLSCREEN MODAL
+// FIXED FULLSCREEN QR MODAL
 function showQrModal() {
-  const qrDiv = document.getElementById("qrcode");
-  const canvas = qrDiv.querySelector("canvas");
-  if (!canvas) return alert("Generate a QR first.");
+  const ssid = document.getElementById('ssid').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const security = document.getElementById('security').value;
+
+  if (!ssid) return alert("Generate a QR first.");
+
+  const qrData =
+    security === "nopass"
+    ? `WIFI:T:;S:${ssid};;`
+    : `WIFI:T:${security};S:${ssid};P:${password};;`;
 
   const modal = document.getElementById("qrModal");
   const content = document.getElementById("qrModalContent");
-  content.innerHTML = "";
-  content.appendChild(canvas.cloneNode(true));
+  content.innerHTML = ""; // clear old QR in modal
 
-  modal.style.display = "flex";
+  // Generate a fresh large QR for modal
+  QRCode.toCanvas(qrData, { width: 300, margin: 2 }, function (err, canvas) {
+    if (!err) {
+      content.appendChild(canvas);
+      modal.style.display = "flex";
+    }
+  });
 
   modal.onclick = function() {
     modal.style.display = "none";
@@ -195,4 +207,80 @@ function copyWifi() {
 // ANDROID: Open WiFi settings
 function openWifiSettings() {
   window.location.href = "intent:#Intent;action=android.settings.WIFI_SETTINGS;end";
+}
+
+// iPhone Profile Download — Wrapped safely
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.getElementById('downloadProfile');
+  if (!btn) return;
+
+  btn.onclick = function() {
+    var ssid = document.getElementById('ssid').value;
+    var password = document.getElementById('password').value;
+    var security = document.getElementById('security').value;
+    var uuid = generateUUID();
+    var wifiUuid = generateUUID();
+
+    var profile =
+`<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>PayloadContent</key>
+    <array>
+      <dict>
+        <key>EncryptionType</key>
+        <string>${security === 'nopass' ? '' : security}</string>
+        <key>Password</key>
+        <string>${security === 'nopass' ? '' : password}</string>
+        <key>SSID_STR</key>
+        <string>${ssid}</string>
+        <key>PayloadType</key>
+        <string>com.apple.wifi.managed</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+        <key>PayloadIdentifier</key>
+        <string>wifi.porter.setup.wifi</string>
+        <key>PayloadUUID</key>
+        <string>${wifiUuid}</string>
+        <key>PayloadDisplayName</key>
+        <string>Wi-Fi Porter Setup</string>
+        <key>AutoJoin</key>
+        <true/>
+      </dict>
+    </array>
+    <key>PayloadType</key>
+    <string>Configuration</string>
+    <key>PayloadVersion</key>
+    <integer>1</integer>
+    <key>PayloadIdentifier</key>
+    <string>wifi.porter.setup</string>
+    <key>PayloadDisplayName</key>
+    <string>Wi-Fi Porter Setup</string>
+    <key>PayloadDescription</key>
+    <string>Configures Wi-Fi settings</string>
+    <key>PayloadRemovalDisallowed</key>
+    <false/>
+    <key>PayloadUUID</key>
+    <string>${uuid}</string>
+  </dict>
+</plist>`;
+
+    var blob = new Blob([profile], {type: 'application/x-apple-aspen-config'});
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'wifi.mobileconfig';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+});
+
+// RFC-compliant UUID
+function generateUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0;
+    var v = c === 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
 }
