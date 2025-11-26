@@ -13,17 +13,15 @@
     <!-- BRAND HEADER -->
     <div class="brand-header">
       <img src="logo.png" alt="Precision Mark Engraving Logo" class="brand-logo">
-      <h1 class="brand-title">Precision Mark Engraving</h1>
+      <h1 class="brand-title">WiFi Porter Setup</h1>
     </div>
 
-    <h2 class="page-title">WiFi Porter Setup</h2>
-
     <p id="instructions">
-      <b>Porter Setup Steps:</b><br>
-      1. Enter your Wi-Fi information.<br>
-      2. Tap "Generate Link + QR".<br>
-      3. Copy the link and write it to your NFC tag using NFC Tools.<br>
-      4. Done — guests can tap your Porter for instant Wi-Fi.
+      <b>Setup Instructions:</b><br>
+      1. Enter your Wi-Fi network information.<br>
+      2. Tap <b>"Generate Link + QR"</b>.<br>
+      3. Copy the link and write it to your NFC tag using the NFC Tools app.<br>
+      4. Done—guests can tap your Porter for instant Wi-Fi.
     </p>
 
     <!-- WIFI FORM -->
@@ -43,9 +41,8 @@
       <option value="nopass">None</option>
     </select>
 
-    <button id="generateBtn" onclick="generate()">Generate Link + QR</button>
+    <button onclick="generate()">Generate Link + QR</button>
 
-    <!-- iPhone MOBILECONFIG -->
     <button id="downloadProfile" type="button" class="iphone-btn">
       Download Wi-Fi Profile for iPhone
     </button>
@@ -53,35 +50,37 @@
     <label>Your NFC Tag Setup Link:</label>
     <textarea id="wifiString" readonly></textarea>
 
-    <button onclick="copySetupUrl()" class="small-btn">Copy URL</button>
+    <button onclick="copySetupUrl()" class="secondary">Copy Link</button>
 
     <h2>QR Code</h2>
     <div id="qrcode" class="qr-wrapper"></div>
 
-    <button onclick="showQrModal()" class="small-btn">View Fullscreen QR</button>
-    <button onclick="printWifiCard()" class="small-btn">Print WiFi Card</button>
+    <button onclick="showQrModal()" class="secondary">View Fullscreen QR</button>
+    <button onclick="printWifiCard()" class="secondary">Print Mini Wi-Fi Card</button>
 
     <!-- ANDROID SECTION -->
     <div id="androidSection" class="android-only" style="display:none;">
       <h2>Android Options</h2>
       <button onclick="copyWifi()">Copy Password</button>
       <button onclick="openWifiSettings()">Open WiFi Settings</button>
-      <p class="note">
-        Android phones can scan the QR above directly from this screen.
-      </p>
-    </div>
-
-    <!-- SUPPORT LINK -->
-    <div class="support">
-      Need help? <a href="https://precisionmarkengraving.com/pages/contact" target="_blank">Contact Support</a>
+      <p class="note">Android phones can also scan the QR above directly.</p>
     </div>
 
   </div>
 
   <!-- FULLSCREEN QR MODAL -->
   <div id="qrModal" class="modal">
-    <div class="modal-content" id="qrModalContent"></div>
+    <div class="modal-content">
+      <span class="close-btn">×</span>
+      <div id="qrModalContent"></div>
+    </div>
   </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Precision Mark Engraving | Tap • Connect • Enjoy</p>
+    <a href="https://precisionmarkengraving.com/pages/contact" target="_blank">Contact Support</a>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script src="script.js"></script>
@@ -90,8 +89,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       const isAndroid = /android/i.test(navigator.userAgent);
       if (isAndroid) {
-        const section = document.getElementById("androidSection");
-        if (section) section.style.display = "block";
+        document.getElementById("androidSection").style.display = "block";
       }
     });
   </script>
