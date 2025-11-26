@@ -1,101 +1,116 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f3f4f6;
-  padding: 30px;
+  background: #f3f3f3;
   margin: 0;
+  padding: 0;
 }
 
 .container {
-  max-width: 520px;
+  max-width: 450px;
   margin: auto;
   background: white;
-  padding: 25px;
-  border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
 }
 
-/* BRANDING */
 .brand-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  text-align: center;
   margin-bottom: 10px;
 }
 
 .brand-logo {
-  height: 60px;
-  width: 60px;
-  border-radius: 50%;
+  width: 80px;
+  height: 80px;
 }
 
 .brand-title {
-  font-size: 22px;
-  font-weight: bold;
-  margin: 0;
+  margin: 5px 0 0 0;
 }
 
-.page-title {
-  text-align: center;
-  margin-top: 5px;
-  margin-bottom: 20px;
+h2 {
+  margin-top: 20px;
 }
 
-label {
-  font-weight: bold;
-  margin-top: 16px;
-  display: block;
-}
-
-input,
-select,
-textarea,
-button {
+input, select, textarea {
   width: 100%;
-  padding: 12px;
+  padding: 10px;
   margin-top: 5px;
-  font-size: 15px;
-  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border-radius: 6px;
   border: 1px solid #ccc;
 }
 
 textarea {
-  height: 80px;
-  resize: none;
+  height: 70px;
 }
 
 button {
-  background: black;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background: #007aff;
   border: none;
+  color: white;
+  margin-top: 10px;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+button.small-btn {
+  width: auto;
+  padding: 8px 14px;
+  margin-top: 8px;
+  display: inline-block;
+}
+
+.password-wrapper {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
-  margin-top: 18px;
+  user-select: none;
+  font-size: 18px;
+}
+
+.error {
+  border-color: red !important;
+}
+
+.support {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 14px;
+}
+
+.support a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #007aff;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
   border-radius: 10px;
 }
 
-button:hover {
-  background: #333;
-}
-
-.iphone-btn {
-  background: #005af0;
-}
-
-.iphone-btn:hover {
-  background: #0046b8;
-}
-
-/* QR styling */
-.qr-wrapper {
-  text-align: center;
-  margin-top: 15px;
-}
-
-.android-only button {
-  margin-top: 10px;
-}
-
-.note {
-  font-size: 13px;
-  color: #444;
-  margin-top: 8px;
+.modal-content canvas {
+  width: 300px;
+  height: 300px;
 }
