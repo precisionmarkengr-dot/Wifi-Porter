@@ -53,9 +53,6 @@ function validateForm() {
   return ok;
 }
 
-// PME Logo for QR overlay
-const logoSrc = "logo.png";
-
 // Main generate function
 function generate() {
   if (!validateForm()) return;
@@ -76,35 +73,11 @@ function generate() {
   const qrDiv = document.getElementById("qrcode");
   qrDiv.innerHTML = "";
 
-  // Base QR
   QRCode.toCanvas(qrData, { width: 300, margin: 2 }, function (err, canvas) {
-    if (err) return;
-
-    // Overlay PME logo
-    overlayLogo(canvas);
-    qrDiv.appendChild(canvas);
+    if (!err) {
+      qrDiv.appendChild(canvas);
+    }
   });
-}
-
-// Add PME logo to QR canvas
-function overlayLogo(canvas) {
-  let ctx = canvas.getContext("2d");
-  let size = canvas.width * 0.10;  // 10% size
-  let x = (canvas.width - size) / 2;
-  let y = (canvas.height - size) / 2;
-
-  const logo = new Image();
-  logo.src = logoSrc;
-
-  logo.onload = () => {
-    // draw white circle background for logo clarity
-    ctx.fillStyle = "white";
-    ctx.beginPath();
-    ctx.arc(canvas.width/2, canvas.height/2, size/1.8, 0, Math.PI*2);
-    ctx.fill();
-
-    ctx.drawImage(logo, x, y, size, size);
-  };
 }
 
 // Copy URL
@@ -145,7 +118,6 @@ function showQrModal() {
 
   QRCode.toCanvas(qrData, { width: 300, margin: 2 }, function (err, canvas) {
     if (!err) {
-      overlayLogo(canvas);
       content.appendChild(canvas);
       modal.style.display = "flex";
     }
@@ -202,26 +174,10 @@ function printWifiCard() {
 
     <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
     <script>
-      const logo = "${logoSrc}";
       QRCode.toCanvas("${qrData}", { width: 80 }, (err, canvas) => {
         if (!err) {
-          const ctx = canvas.getContext("2d");
-          const img = new Image();
-          img.src = logo;
-          img.onload = () => {
-            const size = canvas.width * 0.10;
-            const x = (canvas.width - size)/2;
-            const y = (canvas.height - size)/2;
-
-            ctx.fillStyle = "white";
-            ctx.beginPath();
-            ctx.arc(canvas.width/2, canvas.height/2, size/1.8, 0, Math.PI*2);
-            ctx.fill();
-
-            ctx.drawImage(img, x, y, size, size);
-            document.getElementById("qrcodePrint").appendChild(canvas);
-            window.print();
-          };
+          document.getElementById("qrcodePrint").appendChild(canvas);
+          window.print();
         }
       });
     </script>
@@ -282,11 +238,11 @@ document.addEventListener("DOMContentLoaded", () => {
         <key>PayloadVersion</key>
         <integer>1</integer>
         <key>PayloadIdentifier</key>
-        <string>wifi.porter.setup.wifi</string>
+        <string>wifi.pme.setup.wifi</string>
         <key>PayloadUUID</key>
         <string>${wifiUuid}</string>
         <key>PayloadDisplayName</key>
-        <string>Wi-Fi Porter Setup</string>
+        <string>PME WiFi Tap Setup</string>
         <key>AutoJoin</key>
         <true/>
       </dict>
@@ -296,9 +252,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <key>PayloadVersion</key>
     <integer>1</integer>
     <key>PayloadIdentifier</key>
-    <string>wifi.porter.setup</string>
+    <string>wifi.pme.setup</string>
     <key>PayloadDisplayName</key>
-    <string>Wi-Fi Porter Setup</string>
+    <string>PME WiFi Tap Setup</string>
     <key>PayloadDescription</key>
     <string>Configures Wi-Fi settings</string>
     <key>PayloadRemovalDisallowed</key>
