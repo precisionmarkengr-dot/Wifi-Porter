@@ -31,7 +31,10 @@
     <input id="ssid" type="text" placeholder="Enter network name" />
 
     <label>Password</label>
-    <input id="password" type="text" placeholder="Enter password" />
+    <div class="password-wrapper">
+      <input id="password" type="password" placeholder="Enter password" />
+      <span id="togglePassword" class="eye-icon">👁</span>
+    </div>
 
     <label>Security</label>
     <select id="security">
@@ -40,7 +43,7 @@
       <option value="nopass">None</option>
     </select>
 
-    <button onclick="generate()">Generate Link + QR</button>
+    <button id="generateBtn" onclick="generate()">Generate Link + QR</button>
 
     <!-- iPhone MOBILECONFIG -->
     <button id="downloadProfile" type="button" class="iphone-btn">
@@ -50,27 +53,34 @@
     <label>Your NFC Tag Setup Link:</label>
     <textarea id="wifiString" readonly></textarea>
 
-    <!-- NEW BUTTON: COPY URL -->
-    <button onclick="copySetupUrl()" style="margin-top:10px;">Copy URL</button>
+    <button onclick="copySetupUrl()" class="small-btn">Copy URL</button>
 
     <h2>QR Code</h2>
     <div id="qrcode" class="qr-wrapper"></div>
 
-    <!-- NEW BUTTON: PRINT WIFI CARD -->
-    <button onclick="printWifiCard()" style="margin-top:10px;">Print WiFi Card</button>
+    <button onclick="showQrModal()" class="small-btn">View Fullscreen QR</button>
+    <button onclick="printWifiCard()" class="small-btn">Print WiFi Card</button>
 
     <!-- ANDROID SECTION -->
     <div id="androidSection" class="android-only" style="display:none;">
       <h2>Android Options</h2>
-
       <button onclick="copyWifi()">Copy Password</button>
       <button onclick="openWifiSettings()">Open WiFi Settings</button>
-
       <p class="note">
         Android phones can scan the QR above directly from this screen.
       </p>
     </div>
 
+    <!-- SUPPORT LINK -->
+    <div class="support">
+      Need help? <a href="https://precisionmarkengraving.com/pages/contact" target="_blank">Contact Support</a>
+    </div>
+
+  </div>
+
+  <!-- FULLSCREEN QR MODAL -->
+  <div id="qrModal" class="modal">
+    <div class="modal-content" id="qrModalContent"></div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
